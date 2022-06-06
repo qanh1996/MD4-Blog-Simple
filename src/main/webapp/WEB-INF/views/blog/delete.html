@@ -12,7 +12,7 @@
 </p>
 <form th:action="@{/delete-blog}" th:object="${blog}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
-    <table id="blogs">
+    <table>
         <tr>
             <td>First name:</td>
             <td th:text="${blog.name}"></td>

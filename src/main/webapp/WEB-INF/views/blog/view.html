@@ -11,14 +11,19 @@
 </p>
 <form th:action="@{/view-blog}" th:object="${blog}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
-    <table id="blogs">
+    <table>
         <tr>
             <td>Name:</td>
             <td><p th:text="${blog.name}"/></td>
         </tr>
         <tr>
-            <td>content:</td>
+            <td>Content:</td>
             <td><p th:text="${blog.content}"/></td>
+        </tr>
+
+        <tr>
+            <td>Category:</td>
+            <td><p th:text="${blog.category.name}"/></td>
         </tr>
         <tr>
             <td></td>

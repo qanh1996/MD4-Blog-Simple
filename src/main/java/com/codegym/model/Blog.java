@@ -10,6 +10,10 @@ public class Blog {
     private Long id;
     private String name;
     private String content;
+    private String dateTime;
+
+    @ManyToOne ()
+    private Category category;
 
     public Blog() {
     }
@@ -42,5 +46,21 @@ public class Blog {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

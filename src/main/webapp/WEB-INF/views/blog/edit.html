@@ -12,9 +12,9 @@
 <th:block th:if="${message}">
     <p th:text="${message}"></p>
 </th:block>
-<form id="" th:action="@{/edit-blog}" th:object="${blog}" method="post">
+<form th:action="@{/edit-blog}" th:object="${blog}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
-    <table id="blogs">
+    <table>
         <tr>
             <td>First name:</td>
             <td><input type="text" th:field="*{name}"/></td>
@@ -22,6 +22,17 @@
         <tr>
             <td>Last name:</td>
             <td><input type="text" th:field="*{content}"/></td>
+        </tr>
+        <tr>
+            <td>Category:</td>
+            <td>
+                <select name="category">
+                    <option th:each="c : ${categories}"
+                            th:value="${c.id}"
+                            th:text="${c.name}"
+                            th:selected="(${blog.category}) and (${c.id} == *{category.id})"></option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td></td>

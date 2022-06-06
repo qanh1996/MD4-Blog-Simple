@@ -1,8 +1,9 @@
 package com.codegym.configuration;
-import com.codegym.repository.BlogRepository;
+import com.codegym.formatter.CategoryFormatter;
 import com.codegym.repository.IBlogRepository;
-import com.codegym.service.BlogService;
-import com.codegym.service.IBlogService;
+import com.codegym.service.blog.BlogService;
+import com.codegym.service.blog.IBlogService;
+import com.codegym.service.category.CategoryService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -10,6 +11,9 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -32,7 +36,9 @@ import java.util.Properties;
 @Configuration  //đánh đấu đây là file cấu hình dự án Spring
 @EnableWebMvc // đánh dấu dự án này hỗ trợ mô hình MVC
 @EnableTransactionManagement // đánh dấu dự án này hỗ trợ mô hình MVC
-@ComponentScan("com.codegym.controller")
+@ComponentScan("com.codegym")
+@EnableJpaRepositories("com.codegym.repository")
+@EnableSpringDataWebSupport
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     private ApplicationContext applicationContext; // khai báo 1 Spring Container
@@ -113,14 +119,19 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         return properties;
     }
 
-    @Bean
-    public IBlogRepository blogRepository() {
-        return new BlogRepository();
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
     }
 
-    @Bean
-    public IBlogService blogService() {
-        return new BlogService() {
-        };
-    }
+//    @Bean
+//    public IBlogRepository blogRepository() {
+//        return new BlogRepository();
+//    }
+//
+//    @Bean
+//    public IBlogService blogService() {
+//        return new BlogService() {
+//        };
+//    }
 }
